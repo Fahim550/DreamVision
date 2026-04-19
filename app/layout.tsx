@@ -29,7 +29,6 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <body className="min-h-full flex flex-col">
         <Header />
-
         {children}
       </body>
     </html>

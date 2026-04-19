@@ -104,7 +104,7 @@ export const Header = () => {
           <div className="flex items-center gap-2">
             <Button
               asChild
-              variant="default"
+              variant="cta"
               size="default"
               className="hidden sm:inline-flex"
             >
