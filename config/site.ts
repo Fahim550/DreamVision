@@ -2,6 +2,15 @@
 import type { LucideIcon } from "lucide-react";
 import type { StaticImageData } from "next/image";
 
+import {
+  BedDouble,
+  FlaskConical,
+  HeartPulse,
+  Scissors,
+  Stethoscope,
+  Wind,
+} from "lucide-react";
+
 export const site = {
   name: "MediCore Equipment",
   tagline: "Trusted Medical Equipment for Modern Healthcare",
@@ -43,57 +52,57 @@ export interface Category {
   image: StaticImageData;
 }
 
-// import catAnest from "@/assets/cat-anesthesia.jpg";
-// import catBeds from "@/assets/cat-beds.jpg";
-// import catDiag from "@/assets/cat-diagnostic.jpg";
-// import catIcu from "@/assets/cat-icu.jpg";
-// import catLab from "@/assets/cat-laboratory.jpg";
-// import catSurg from "@/assets/cat-surgical.jpg";
+import catAnest from "../public/image/cat-anesthesia.jpg";
+import catBeds from "../public/image/cat-beds.jpg";
+import catDiag from "../public/image/cat-diagnostic.jpg";
+import catIcu from "../public/image/cat-icu.jpg";
+import catLab from "../public/image/cat-laboratory.jpg";
+import catSurg from "../public/image/cat-surgical.jpg";
 
-// export const categories: Category[] = [
-//   {
-//     key: "icu",
-//     name: "ICU & Critical Care",
-//     blurb: "Patient monitors, ventilators, infusion pumps",
-//     icon: HeartPulse,
-//     image: catIcu,
-//   },
-//   {
-//     key: "diagnostic",
-//     name: "Diagnostic Imaging",
-//     blurb: "Ultrasound, ECG, defibrillators",
-//     icon: Stethoscope,
-//     image: catDiag,
-//   },
-//   {
-//     key: "laboratory",
-//     name: "Laboratory",
-//     blurb: "Analyzers, centrifuges, microscopes",
-//     icon: FlaskConical,
-//     image: catLab,
-//   },
-//   {
-//     key: "surgical",
-//     name: "Surgical",
-//     blurb: "Operating tables, lights, electrosurgical units",
-//     icon: Scissors,
-//     image: catSurg,
-//   },
-//   {
-//     key: "beds",
-//     name: "Hospital Beds",
-//     blurb: "ICU beds, recovery beds, stretchers",
-//     icon: BedDouble,
-//     image: catBeds,
-//   },
-//   {
-//     key: "anesthesia",
-//     name: "Anesthesia",
-//     blurb: "Workstations, vaporizers, breathing circuits",
-//     icon: Wind,
-//     image: catAnest,
-//   },
-// ];
+export const categories: Category[] = [
+  {
+    key: "icu",
+    name: "ICU & Critical Care",
+    blurb: "Patient monitors, ventilators, infusion pumps",
+    icon: HeartPulse,
+    image: catIcu,
+  },
+  {
+    key: "diagnostic",
+    name: "Diagnostic Imaging",
+    blurb: "Ultrasound, ECG, defibrillators",
+    icon: Stethoscope,
+    image: catDiag,
+  },
+  {
+    key: "laboratory",
+    name: "Laboratory",
+    blurb: "Analyzers, centrifuges, microscopes",
+    icon: FlaskConical,
+    image: catLab,
+  },
+  {
+    key: "surgical",
+    name: "Surgical",
+    blurb: "Operating tables, lights, electrosurgical units",
+    icon: Scissors,
+    image: catSurg,
+  },
+  {
+    key: "beds",
+    name: "Hospital Beds",
+    blurb: "ICU beds, recovery beds, stretchers",
+    icon: BedDouble,
+    image: catBeds,
+  },
+  {
+    key: "anesthesia",
+    name: "Anesthesia",
+    blurb: "Workstations, vaporizers, breathing circuits",
+    icon: Wind,
+    image: catAnest,
+  },
+];
 
 export const brands = [
   "MediCore",
