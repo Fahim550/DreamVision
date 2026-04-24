@@ -1,6 +1,7 @@
 import Category from "@/components/home/Category";
 import FeatureProduct from "@/components/home/FeatureProduct";
 import HeroSection from "@/components/home/HeroSection";
+import TrustedBrand from "@/components/home/TrustedBrand";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <HeroSection />
       <Category />
       <FeatureProduct />
+      <TrustedBrand />
     </div>
   );
 }
