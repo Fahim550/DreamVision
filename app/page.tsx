@@ -1,4 +1,5 @@
 import Category from "@/components/home/Category";
+import CtaBanner from "@/components/home/CtaBanner";
 import FeatureProduct from "@/components/home/FeatureProduct";
 import HeroSection from "@/components/home/HeroSection";
 import TrustedBrand from "@/components/home/TrustedBrand";
@@ -13,6 +14,7 @@ export default function Home() {
       <FeatureProduct />
       <TrustedBrand />
       <WhyChooseUs />
+      <CtaBanner />
     </div>
   );
 }
