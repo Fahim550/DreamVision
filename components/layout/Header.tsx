@@ -3,35 +3,20 @@
 import { Button } from "@/components/ui/button";
 import { nav, site } from "@/config/site";
 import { cn } from "@/lib/utils";
+import LogoImage from "@/public/image/logo-png.png";
 import { ArrowRight, Menu, Phone, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Logo = () => (
-  <Link href="/" className="flex items-center gap-2.5" aria-label={site.name}>
-    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-cta shadow-glow">
-      <svg
-        viewBox="0 0 24 24"
-        className="h-5 w-5 text-primary-foreground"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M12 2v6M12 16v6M2 12h6M16 12h6" />
-        <circle cx="12" cy="12" r="4" />
-      </svg>
-    </div>
-    <div className="flex flex-col leading-none">
-      <span className="font-display text-lg font-bold tracking-tight text-foreground">
-        MediCore
-      </span>
-      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-        Equipment
-      </span>
-    </div>
+  <Link
+    href="/"
+    className="flex items-center pt-2 h-50 w-50"
+    aria-label={site.name}
+  >
+    <Image src={LogoImage} alt={site.name} width={500} height={500} />
   </Link>
 );
 
@@ -104,7 +89,7 @@ export const Header = () => {
           <div className="flex items-center gap-2">
             <Button
               asChild
-              variant="cta"
+              variant="primary_cta"
               size="default"
               className="hidden sm:inline-flex"
             >

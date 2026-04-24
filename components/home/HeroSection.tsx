@@ -21,24 +21,24 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-screen-2xl mx-auto px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="text-white animate-fade-up">
-          <span className="inline-block px-4 py-1 rounded-full bg-primary-glow text-white text-sm font-semibold tracking-wider uppercase mb-6">
-            Established Precision
+          <span className="inline-block px-4 py-1 rounded-full bg-secondary-active hover:bg-secondary-hover text-white text-sm font-semibold tracking-wider uppercase mb-6">
+            Since 2005
           </span>
           <h1 className="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight  mb-8">
-            Equipping hospitals to deliver extraordinary care.
+            Your Care Our<span className="text-secondary"> Dream</span>
           </h1>
-          <p className="text-xl text-white/80 leading-relaxed mb-10 max-w-xl">
+          <p className="text-xl text-white leading-relaxed mb-10 max-w-xl">
             Supplying hospitals, clinics, and healthcare facilities with
             cutting-edge medical technology from globally trusted brands since
             2005.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild variant="hero" size="xl">
+            <Button asChild variant="primary_cta" size="xl">
               <Link href="/quote">
                 Request a Quote <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="xl">
+            <Button asChild variant="secondary_cta" size="xl">
               <Link href="/products">Browse catalogue</Link>
             </Button>
           </div>

@@ -4,40 +4,73 @@
 
 /* custom variables */
 @theme inline {
+  /* ================= FONTS ================= */
   --font-sans: var(--font-inter);
   --font-display: var(--font-sora);
 
+  /* ================= BASE ================= */
   --color-background: hsl(210 30% 99%);
   --color-foreground: hsl(215 35% 14%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(215 35% 14%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(215 35% 14%);
-  --color-primary: hsl(212 88% 32%);
-  --color-primary-foreground: hsl(210 40% 99%);
-  --color-primary-glow: hsl(205 95% 55%);
-  --color-primary-soft: hsl(210 100% 96%);
-  --color-accent: hsl(188 78% 42%);
-  --color-accent-foreground: hsl(210 40% 99%);
-  --color-secondary: hsl(210 30% 94%);
-  --color-secondary-foreground: hsl(215 40% 18%);
-  --color-muted: hsl(210 25% 95%);
-  --color-muted-foreground: hsl(215 15% 45%);
-  --color-destructive: hsl(0 78% 52%);
-  --color-destructive-foreground: hsl(210 40% 99%);
-  --color-success: hsl(152 60% 38%);
-  --color-success-foreground: hsl(210 40% 99%);
-  --color-border: hsl(214 25% 90%);
-  --color-input: hsl(214 25% 88%);
-  --color-ring: hsl(212 88% 42%);
+
   --color-surface: hsl(210 33% 97%);
   --color-surface-foreground: hsl(215 35% 14%);
 
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(215 35% 14%);
+
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(215 35% 14%);
+
+  /* ================= PRIMARY (BLUE) ================= */
+  --color-primary: hsl(212 88% 32%);
+  --color-primary-hover: hsl(212 88% 28%);
+  --color-primary-active: hsl(212 88% 24%);
+  --color-primary-foreground: hsl(210 40% 99%);
+  --color-primary-soft: hsl(210 100% 96%);
+  --color-primary-glow: hsl(205 95% 55%);
+
+  /* ================= SECONDARY (RED - BRAND) ================= */
+  --color-secondary: hsl(355 85% 55%);
+  --color-secondary-hover: hsl(355 75% 50%);
+  --color-secondary-active: hsl(355 75% 45%);
+  --color-secondary-foreground: hsl(210 40% 99%);
+  --color-secondary-soft: hsl(355 100% 96%);
+  --color-secondary-muted: hsl(355 60% 85%);
+
+  /* ================= ACCENT (TEAL) ================= */
+  --color-accent: hsl(188 78% 42%);
+  --color-accent-hover: hsl(188 78% 36%);
+  --color-accent-foreground: hsl(210 40% 99%);
+
+  /* ================= STATE COLORS ================= */
+  --color-success: hsl(152 60% 38%);
+  --color-success-foreground: hsl(210 40% 99%);
+  --color-success-soft: hsl(152 60% 94%);
+
+  --color-warning: hsl(38 92% 50%);
+  --color-warning-foreground: hsl(210 40% 10%);
+  --color-warning-soft: hsl(48 100% 96%);
+
+  --color-destructive: hsl(0 78% 52%);
+  --color-destructive-hover: hsl(0 70% 45%);
+  --color-destructive-foreground: hsl(210 40% 99%);
+  --color-destructive-soft: hsl(0 100% 96%);
+
+  /* ================= UI ELEMENTS ================= */
+  --color-muted: hsl(210 25% 95%);
+  --color-muted-foreground: hsl(215 15% 45%);
+
+  --color-border: hsl(214 25% 90%);
+  --color-input: hsl(214 25% 88%);
+  --color-ring: hsl(212 88% 42%);
+
+  /* ================= RADIUS ================= */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.25rem;
 
+  /* ================= ANIMATION ================= */
   --animate-fade-up: fade-up 0.6s ease-out both;
   --animate-fade-in: fade-in 0.8s ease-out both;
   --animate-fade-up-delay: fade-up 0.6s ease-out 0.2s both;
@@ -51,16 +84,22 @@
   );
 } */
 
-.hero-gradient {
+/* .hero-gradient {
   background: linear-gradient(
     135deg,
     rgba(104, 209, 220, 0.5) 0%,
     rgba(0, 94, 184, 0.2) 100%
   );
+} */
+.hero-gradient {
+  background: linear-gradient(
+    to right,
+    hsl(212 88% 32% / 0.85),
+    hsl(212 88% 32% / 0.4)
+  );
 }
 
 @theme inline {
-  /* ...your existing theme... */
   --animate-marquee: marquee 30s linear infinite;
   --animate-marquee-reverse: marquee-reverse 30s linear infinite;
 }
