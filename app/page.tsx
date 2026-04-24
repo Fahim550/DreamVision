@@ -1,6 +1,5 @@
-"use client";
-
 import Category from "@/components/home/Category";
+import FeatureProduct from "@/components/home/FeatureProduct";
 import HeroSection from "@/components/home/HeroSection";
 
 export default function Home() {
@@ -9,11 +8,7 @@ export default function Home() {
       {/* <Button>Shadcn is Working</Button> */}
       <HeroSection />
       <Category />
-
-      {/* <div className="bg-primary text-primary-foreground">...</div>
-      <div className="bg-primary-soft text-primary">...</div>
-      <div className="font-display text-foreground">...</div>
-      <div className="bg-success text-success-foreground">...</div> */}
+      <FeatureProduct />
     </div>
   );
 }
