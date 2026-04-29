@@ -22,7 +22,7 @@ const buttonVariants = cva(
         primary_cta:
           "bg-secondary text-white shadow-xl border border-secondary-active hover:bg-secondary-hover hover:shadow-elevated hover:-translate-y-0.5",
         secondary_cta:
-          "bg-white text-secondary shadow-xl border border-secondary-soft hover:bg-secondary-soft hover:shadow-elevated hover:-translate-y-0.5",
+          "bg-white text-primary shadow-xl border border-secondary-soft hover:bg-primary-soft hover:shadow-elevated hover:-translate-y-0.5",
         cta: "bg-primary text-primary-foreground shadow-card-soft hover:bg-primary/90 hover:shadow-elevated hover:-translate-y-0.5",
         soft: "bg-primary-soft text-primary hover:bg-primary/15",
         whatsapp:

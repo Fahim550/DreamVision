@@ -12,10 +12,10 @@ import {
 } from "lucide-react";
 
 export const site = {
-  name: "MediCore Equipment",
+  name: "Dream Vision Interantional",
   tagline: "Trusted Medical Equipment for Modern Healthcare",
   description:
-    "MediCore supplies hospitals, clinics and laboratories with premium ICU, diagnostic, surgical and laboratory equipment — backed by installation, training and lifetime support.",
+    "Dream Vision supplies hospitals, clinics and laboratories with premium ICU, diagnostic, surgical and laboratory equipment — backed by installation, training and lifetime support.",
   phone: "+1 (800) 555-0142",
   whatsapp: "18005550142",
   email: "sales@medicore-equipment.com",
@@ -105,7 +105,7 @@ export const categories: Category[] = [
 ];
 
 export const brands = [
-  "MediCore",
+  "Dream Vision",
   "Pulsewave",
   "BioLumen",
   "ClariScan",

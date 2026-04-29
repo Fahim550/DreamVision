@@ -72,7 +72,7 @@ export const products: Product[] = [
     slug: "mc-9000-patient-monitor",
     name: "Multi-Parameter Patient Monitor",
     model: "MC-9000",
-    brand: "MediCore",
+    brand: "Dream Vision",
     category: "icu",
     featured: true,
     shortDescription:
@@ -132,7 +132,7 @@ export const products: Product[] = [
         rows: [
           ["Display", '12.1" TFT', '15.6" Touch', '19" Touch'],
           ["ECG leads", "5-lead", "12-lead", "12-lead + Vector"],
-          ["SpO2 technology", "MediCore", "Masimo SET®", "Masimo rainbow®"],
+          ["SpO2 technology", "Dream Vision", "Masimo SET®", "Masimo rainbow®"],
           ["Invasive pressures", "2", "4", "8"],
           ["Battery runtime", "2 h", "4 h", "6 h"],
           ["Trend storage", "24 h", "72 h", "168 h"],

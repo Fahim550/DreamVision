@@ -1,32 +1,26 @@
 import { categories, nav, site } from "@/config/site";
+import LogoImage from "@/public/image/logo-png.png";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+
+const Logo = () => (
+  <Link
+    href="/"
+    className="flex items-center pt-2 h-20 w-60"
+    aria-label={site.name}
+  >
+    <Image src={LogoImage} alt={site.name} width={500} height={500} />
+  </Link>
+);
 
 export const Footer = () => {
   return (
     <footer className="mt-24 border-t border-border bg-surface">
       <div className="container-tight grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-cta">
-              <svg
-                viewBox="0 0 24 24"
-                className="h-5 w-5 text-primary-foreground"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 2v6M12 16v6M2 12h6M16 12h6" />
-                <circle cx="12" cy="12" r="4" />
-              </svg>
-            </div>
-            <span className="font-display text-lg font-bold">
-              MediCore Equipment
-            </span>
-          </Link>
-          <p className="mt-4 max-w-xs text-sm text-muted-foreground">
+        <div className="flex flex-col">
+          <Logo />
+          <p className="max-w-xs text-sm text-muted-foreground">
             {site.description}
           </p>
         </div>

@@ -37,15 +37,15 @@ export default function WhyChooseUs() {
       <section className="container-tight py-20 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-start">
           <div>
-            <span className="eyebrow">Why MediCore</span>
+            <span className="eyebrow">Why Dream Vision</span>
             <h2 className="section-title mt-3">
               A partner, not just a supplier.
             </h2>
             <p className="section-sub">
-              Healthcare cannot pause. Every MediCore engagement is engineered
+              Healthcare cannot pause. Every Dream Vision engagement is engineered
               for uptime — from the first quote to year ten of service.
             </p>
-            <Button asChild className="mt-7" variant="cta">
+            <Button asChild className="mt-7" variant="primary_cta">
               <Link href="/about">
                 Our story <ArrowRight className="h-4 w-4" />
               </Link>

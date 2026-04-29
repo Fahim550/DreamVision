@@ -35,7 +35,7 @@ export const ProductCard = ({ product }: { product: Product }) => (
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           View details
         </span>
-        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft text-primary transition-all group-hover:bg-primary group-hover:text-primary-foreground">
+        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft text-secondary transition-all group-hover:bg-secondary group-hover:text-primary-foreground">
           <ArrowUpRight className="h-4 w-4" />
         </span>
       </div>

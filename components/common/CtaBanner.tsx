@@ -42,7 +42,7 @@ export const CTABanner = ({
           <Button
             asChild
             size="xl"
-            className="bg-background text-primary hover:bg-background/90"
+            className="bg-secondary text-white hover:bg-secondary-hover"
           >
             <Link href={primaryHref}>
               {primaryLabel} <ArrowRight className="h-5 w-5" />
