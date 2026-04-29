@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { site } from "@/config/site";
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const schema = z.object({
@@ -20,11 +21,11 @@ export default function ContactPage() {
     const fd = new FormData(e.currentTarget);
     const parsed = schema.safeParse(Object.fromEntries(fd.entries()));
     if (!parsed.success) {
-      //   toast.error("Please fill in name, email and message.");
+      toast.error("Please fill in name, email and message.");
       return;
     }
     (e.target as HTMLFormElement).reset();
-    // toast.success("Message sent — we'll reply shortly.");
+    toast.success("Message sent — we'll reply shortly.");
   };
 
   return (
@@ -94,7 +95,7 @@ export default function ContactPage() {
             </div>
 
             <a
-              href={`https://wa.me/${site.whatsapp}`}
+              href={`https://wa.me/${site.whatsapp}?text=Hello%2C%20I%20am%20interested%20in%20your%20medical%20equipment.`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between rounded-2xl border border-success/30 bg-success/10 p-6 transition-colors hover:bg-success/15"
@@ -162,12 +163,7 @@ export default function ContactPage() {
                   className="mt-1.5"
                 />
               </div>
-              <Button
-                type="submit"
-                variant="primary_cta"
-                size="lg"
-                className="mt-2"
-              >
+              <Button type="submit" variant="hero" size="lg" className="mt-2">
                 Send message
               </Button>
             </div>

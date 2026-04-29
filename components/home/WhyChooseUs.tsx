@@ -42,10 +42,11 @@ export default function WhyChooseUs() {
               A partner, not just a supplier.
             </h2>
             <p className="section-sub">
-              Healthcare cannot pause. Every Dream Vision engagement is engineered
-              for uptime — from the first quote to year ten of service.
+              Healthcare cannot pause. Every Dream Vision engagement is
+              engineered for uptime — from the first quote to year ten of
+              service.
             </p>
-            <Button asChild className="mt-7" variant="primary_cta">
+            <Button asChild className="mt-7" variant="hero">
               <Link href="/about">
                 Our story <ArrowRight className="h-4 w-4" />
               </Link>

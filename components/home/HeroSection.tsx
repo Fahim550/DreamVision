@@ -33,7 +33,7 @@ export default function HeroSection() {
             2005.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild variant="primary_cta" size="xl">
+            <Button asChild variant="hero" size="xl">
               <Link href="/quote">
                 Request a Quote <ArrowRight className="h-5 w-5" />
               </Link>

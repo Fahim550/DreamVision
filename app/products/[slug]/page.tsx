@@ -135,7 +135,7 @@ const ProductDetailPage = () => {
           </ul>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild variant="primary_cta" size="lg">
+            <Button asChild variant="hero" size="lg">
               <Link href={`/quote?product=${product.slug}`}>
                 Request a Quote <ArrowRight className="h-5 w-5" />
               </Link>
