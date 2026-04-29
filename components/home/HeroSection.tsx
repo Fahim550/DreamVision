@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full h-9vh flex items-center overflow-hidden py-6">
+    <section className="relative w-full h-[80vh] flex items-center overflow-hidden py-6">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <Image
