@@ -1,7 +1,7 @@
 import { products } from "@/data/product";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { ProductCard } from "../common/ProductCard";
+import { ProductCard } from "../product/ProductCard";
 import { Button } from "../ui/button";
 
 export default function FeatureProduct() {

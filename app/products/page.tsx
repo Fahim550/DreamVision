@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductCard } from "@/components/common/ProductCard";
+import { ProductCard } from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { categories } from "@/config/site";
@@ -11,7 +11,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 6;
 
 export default function ProductsPage() {
   const params = useSearchParams();

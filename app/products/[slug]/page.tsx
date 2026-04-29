@@ -1,8 +1,8 @@
 "use client";
 
 import { CTABanner } from "@/components/common/CtaBanner";
-import { ProductCard } from "@/components/common/ProductCard";
 import { BlockRenderer } from "@/components/product/BlockRender";
+import { ProductCard } from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/config/site";
 import { products } from "@/data/product";
