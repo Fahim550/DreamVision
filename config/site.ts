@@ -16,14 +16,14 @@ export const site = {
   tagline: "Trusted Medical Equipment for Modern Healthcare",
   description:
     "Dream Vision supplies hospitals, clinics and laboratories with premium ICU, diagnostic, surgical and laboratory equipment — backed by installation, training and lifetime support.",
-  phone: "+880 1744-879908",
-  whatsapp: "8801744879908",
+  phone: "+880 1740-770408",
+  whatsapp: "8801740770408",
   email: "bddreamvision@gmail.com",
   address:
     "House: 83/B, Shiddeshwari Circular Road Mouchak Tower (9 Floor), Dhaka-1217, Bangladesh",
   hours: "Mon–Sat · 8:00 – 19:00 EST",
   yearsExperience: 22,
-  hospitalsServed: 480,
+  hospitalsServed: 80,
   countriesServed: 34,
   productsCount: 1200,
 };

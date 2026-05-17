@@ -1,6 +1,5 @@
 import {
   ArrowRight,
-  Award,
   Headphones,
   ShieldCheck,
   Truck,
@@ -13,8 +12,8 @@ export default function WhyChooseUs() {
   const whyUs = [
     {
       icon: ShieldCheck,
-      title: "Certified & compliant",
-      body: "ISO 13485, CE & FDA registered. Every device ships with full traceability.",
+      title: "Reliable & Professional",
+      body: "Delivering quality medical equipment solutions with dedicated support and trusted service for healthcare providers.",
     },
     {
       icon: Wrench,
@@ -34,7 +33,7 @@ export default function WhyChooseUs() {
   ];
   return (
     <div>
-      <section className="container-tight py-20 sm:py-24">
+      <section className="container-tight py-12 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-start">
           <div>
             <span className="eyebrow">Why Dream Vision</span>
@@ -76,14 +75,14 @@ export default function WhyChooseUs() {
                 </div>
               );
             })}
-            <div className="sm:col-span-2 rounded-2xl border border-primary/20 bg-primary-soft p-6">
+            {/* <div className="sm:col-span-2 rounded-2xl border border-primary/20 bg-primary-soft p-6">
               <div className="flex items-center gap-3">
                 <Award className="h-6 w-6 text-primary" />
                 <p className="font-display font-semibold text-primary">
                   Certified Excellence Partner — JCI 2024
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

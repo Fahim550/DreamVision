@@ -56,12 +56,12 @@ export default function Services() {
         <div className="container-tight py-14 sm:py-20">
           <span className="eyebrow">Services</span>
           <h1 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            Beyond the box.
+            Beyond the box
           </h1>
           <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
-            Every Dream Vision International engagement includes installation
-            planning, training and lifetime support — because medical equipment
-            is only valuable when it's running.
+            Reaching Every Corner of Bangladesh Seamless installation, expert
+            training, and lifelong support nationwide—because uninterrupted care
+            matters most.
           </p>
         </div>
       </section>

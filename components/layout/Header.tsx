@@ -38,8 +38,9 @@ export const Header = () => {
       <div className="hidden bg-primary text-primary-foreground/90 lg:block">
         <div className="container-tight flex h-9 items-center justify-between text-xs">
           <span>
-            Trusted by {site.hospitalsServed}+ hospitals across{" "}
-            {site.countriesServed} countries
+            {/* Trusted by {site.hospitalsServed}+ hospitals across{" "}
+            {site.countriesServed} countries */}
+            Global Trust. Local Commitment.
           </span>
           <div className="flex items-center gap-5">
             <a
