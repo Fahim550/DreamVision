@@ -4,8 +4,14 @@ import FeatureProduct from "@/components/home/FeatureProduct";
 import HeroSection from "@/components/home/HeroSection";
 import TrustedBrand from "@/components/home/TrustedBrand";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: todos } = await supabase.from("todos").select();
   return (
     <div className="flex flex-col flex-1 items-center justify-center ">
       {/* <Button>Shadcn is Working</Button> */}
@@ -18,3 +24,18 @@ export default function Home() {
     </div>
   );
 }
+
+// export default async function Page() {
+//   const cookieStore = await cookies();
+//   const supabase = createClient(cookieStore);
+
+//   const { data: todos } = await supabase.from("todos").select();
+
+//   return (
+//     <ul>
+//       {todos?.map((todo) => (
+//         <li key={todo.id}>{todo.name}</li>
+//       ))}
+//     </ul>
+//   );
+// }
