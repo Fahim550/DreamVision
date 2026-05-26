@@ -1,5 +1,4 @@
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
+import LayoutShell from "@/components/layout/LayoutShell";
 import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
@@ -36,9 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <body className="min-h-full flex flex-col">
-        <Header />
-        {children}
-        <Footer />
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );
