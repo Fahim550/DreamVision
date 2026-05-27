@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Logo from "@/public/image/logo.png";
 import {
   Award,
   ExternalLink,
@@ -24,6 +25,7 @@ const items = [
   { href: "/admin/brands", label: "Brands", icon: Award },
 ];
 
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 export const AdminLayout = ({ children }: { children: ReactNode }) => {
@@ -44,10 +46,12 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
             href="/admin"
             className="font-display font-bold text-lg flex items-center gap-2"
           >
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded bg-primary text-primary-foreground">
-              <Package className="h-4 w-4" />
-            </span>
-            MediCore Admin
+            <Image
+              src={Logo}
+              alt="Logo"
+              className="h-10 w-10 shadow-md rounded-md object-contain "
+            />
+            Dream Vision Admin
           </Link>
         </div>
         <nav className="flex-1 p-3 space-y-1">
