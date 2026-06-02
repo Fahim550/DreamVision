@@ -8,7 +8,7 @@ import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const AdminLogin = () => {
@@ -22,7 +22,6 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
-  const mountedRef = useRef(false);
 
   // useEffect(() => {
   //   if (typeof window === "undefined") return;
@@ -30,17 +29,11 @@ const AdminLogin = () => {
   // }, []);
 
   useEffect(() => {
-    mountedRef.current = true;
-  }, []);
-
-  useEffect(() => {
-    if (!loading && user && isAdmin && mountedRef.current)
-      router.push("/admin");
+    if (!loading && user && isAdmin) router.push("/admin");
   }, [user, isAdmin, loading, router]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!mountedRef.current) return;
     setBusy(true);
     try {
       // const client = supabase ?? createSupabaseClient();

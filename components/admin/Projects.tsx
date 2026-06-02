@@ -77,6 +77,9 @@ const AdminProjects = () => {
                 {p.hero_image && (
                   <Image
                     src={p.hero_image}
+                    width={400}
+                    height={200}
+                    loading="eager"
                     alt=""
                     className="h-full w-full object-cover"
                   />

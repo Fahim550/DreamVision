@@ -1,5 +1,5 @@
 "use client";
-import { createClient as createSupabaseClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 import {
   createContext,
@@ -30,23 +30,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [supabase, setSupabase] = useState<ReturnType<
-    typeof createSupabaseClient
-  > | null>(null);
+  // const [supabase, setSupabase] = useState<ReturnType<
+  //   typeof createSupabaseClient
+  // > | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const client = createSupabaseClient();
-    setSupabase(client);
+    // const client = createSupabaseClient();
+    // setSupabase(client);
+    const supabase = createClient();
 
-    const { data: sub } = client.auth.onAuthStateChange((_event, s) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
         // Defer role lookup to avoid recursion issues
         setTimeout(() => {
-          client
+          supabase
             .from("user_roles")
             .select("role")
             .eq("user_id", s.user.id)
@@ -59,11 +60,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    client.auth.getSession().then(({ data: { session: s } }) => {
+    supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
-        client
+        supabase
           .from("user_roles")
           .select("role")
           .eq("user_id", s.user.id)
@@ -82,6 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signOut = async () => {
+    const supabase = createClient();
     if (!supabase) return;
     await supabase.auth.signOut();
   };

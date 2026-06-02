@@ -3,6 +3,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { usePathname } from "next/navigation";
+import { WhatsAppFab } from "./WhatsAppFab";
 
 export default function LayoutShell({
   children,
@@ -16,6 +17,7 @@ export default function LayoutShell({
     <>
       {!isAdmin && <Header />}
       {children}
+      <WhatsAppFab />
       {!isAdmin && <Footer />}
     </>
   );

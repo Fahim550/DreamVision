@@ -1,6 +1,8 @@
+import { AuthProvider } from "@/components/hooks/useAuth";
 import LayoutShell from "@/components/layout/LayoutShell";
 import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,9 +35,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${sora.variable}`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${sora.variable}`}
+    >
       <body className="min-h-full flex flex-col">
-        <LayoutShell>{children}</LayoutShell>
+        <AuthProvider>
+          <LayoutShell>{children}</LayoutShell>
+          <Toaster position="top-right" richColors />
+        </AuthProvider>
       </body>
     </html>
   );
