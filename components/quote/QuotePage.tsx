@@ -91,8 +91,8 @@ export default function QuoteRequest() {
             Request received
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Thank you. A MediCore specialist will reach out within one business
-            day with a tailored quotation.
+            Thank you. A Dream Vision specialist will reach out within one
+            business day with a tailored quotation.
           </p>
           <div className="mt-6 flex justify-center gap-3">
             <Button asChild variant="cta">
@@ -281,7 +281,7 @@ export default function QuoteRequest() {
               )}
             </Button>
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              By submitting you agree to be contacted by MediCore for this
+              By submitting you agree to be contacted by Dream Vision for this
               enquiry.
             </p>
           </div>

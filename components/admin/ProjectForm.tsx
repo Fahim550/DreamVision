@@ -58,7 +58,7 @@ const ProjectForm = () => {
       const { data, error } = await supabase
         .from("projects")
         .select("*")
-        .eq("id", id)
+        .eq("id", id as string)
         .maybeSingle();
       if (error) throw error;
       if (data) {
@@ -117,7 +117,7 @@ const ProjectForm = () => {
       const { error } = await supabase
         .from("projects")
         .update(payload)
-        .eq("id", id!);
+        .eq("id", id as string);
       if (error) throw error;
       return id!;
     },

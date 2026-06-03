@@ -87,7 +87,7 @@ const ProductForm = () => {
       const { data, error } = await supabase
         .from("products")
         .select("*")
-        .eq("id", id)
+        .eq("id", id as string)
         .maybeSingle();
       if (error) throw error;
       if (data) {
@@ -153,7 +153,7 @@ const ProductForm = () => {
       const { error } = await supabase
         .from("products")
         .update(payload)
-        .eq("id", id!);
+        .eq("id", id as string);
       if (error) throw error;
       return id!;
     },
@@ -338,6 +338,8 @@ const ProductForm = () => {
                 <Image
                   src={f.hero_image}
                   alt=""
+                  height={500}
+                  width={500}
                   className="mt-2 h-32 rounded-lg border border-border object-cover"
                 />
               )}

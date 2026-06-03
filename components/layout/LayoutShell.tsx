@@ -17,7 +17,7 @@ export default function LayoutShell({
     <>
       {!isAdmin && <Header />}
       {children}
-      <WhatsAppFab />
+      {!isAdmin && <WhatsAppFab />}
       {!isAdmin && <Footer />}
     </>
   );

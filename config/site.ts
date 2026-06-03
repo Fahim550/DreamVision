@@ -1,4 +1,4 @@
-// Site-wide brand & navigation config for MediCore Equipment.
+// Site-wide brand & navigation config for Dream Vision Equipment.
 import type { LucideIcon } from "lucide-react";
 import type { StaticImageData } from "next/image";
 

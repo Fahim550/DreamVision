@@ -183,6 +183,8 @@ const AdminProducts = () => {
                       <Image
                         src={p.hero_image}
                         alt=""
+                        height={500}
+                        width={500}
                         className="h-12 w-12 rounded object-cover"
                       />
                     ) : (

@@ -64,7 +64,7 @@ export default function Projects() {
           </h1>
           <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
             From single-room upgrades to full hospital builds, here's a glimpse
-            of the partners who trust MediCore.
+            of the partners who trust Dream Vision.
           </p>
         </div>
       </section>

@@ -26,7 +26,7 @@ const items = [
 ];
 
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 export const AdminLayout = ({ children }: { children: ReactNode }) => {
   const { user, signOut } = useAuth();
@@ -104,7 +104,7 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
       <div className="flex-1 flex flex-col min-w-0">
         <header className="md:hidden sticky top-0 z-30 h-14 border-b border-border bg-card px-4 flex items-center justify-between">
           <Link href="/admin" className="font-display font-bold">
-            MediCore Admin
+            Dream Vision Admin
           </Link>
           <Button variant="ghost" size="sm" onClick={handleSignOut}>
             <LogOut className="h-4 w-4" />

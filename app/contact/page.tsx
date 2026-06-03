@@ -116,7 +116,7 @@ export default function ContactPage() {
             {/* Map */}
             <div className="overflow-hidden rounded-2xl border border-border shadow-card-soft">
               <iframe
-                title="MediCore HQ map"
+                title="Dream Vision HQ map"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d434.30480169580966!2d90.41262589692099!3d23.74373981202758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b861e8c62ad9%3A0x7eb53f043a1a2aae!2sMouchak%20Tower%2C%2083%2FB%20Shiddheswari%20-%20Malibag%20Mor%20Rd%2C%20Dhaka%201205!5e1!3m2!1sen!2sbd!4v1777485737261!5m2!1sen!2sbdhttps://maps.app.goo.gl/DPgoXMnwJoh7cMrj8"
                 className="h-76 w-full"
                 loading="lazy"
