@@ -126,7 +126,7 @@ export default function QuoteRequest() {
       <section className="container-tight py-12">
         <form
           onSubmit={onSubmit}
-          className="grid gap-8 lg:grid-cols-[1.2fr_1fr]"
+          className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_1fr]"
         >
           <div className="rounded-2xl border border-border bg-card p-6 shadow-card-soft sm:p-8">
             <h2 className="font-display text-xl font-bold">Your details</h2>
@@ -220,7 +220,7 @@ export default function QuoteRequest() {
                     <select
                       value={l.slug}
                       onChange={(e) => updateLine(i, { slug: e.target.value })}
-                      className="h-10 flex-1 rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="h-10 min-w-0 w-full sm:w-auto flex-1 rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       {products.map((p) => (
                         <option key={p.slug} value={p.slug}>

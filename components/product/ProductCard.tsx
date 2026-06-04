@@ -25,21 +25,21 @@ export const ProductCard = ({ product }: { product: Product }) => {
           className="h-full w-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
           priority={product.featured}
         />
-        <span className="absolute left-4 top-4 rounded-full bg-card/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary backdrop-blur">
+        <span className="absolute left-2 sm:left-4 top-2 sm:top-4 rounded-full bg-card/90 px-1.5 sm:px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary backdrop-blur">
           {product.brand}
         </span>
       </div>
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           Model {product.model}
         </p>
-        <h3 className="mt-1 font-display text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
+        <h3 className="mt-1 font-display text-base sm:text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
           {product.name}
         </h3>
         <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
           {product.shortDescription}
         </p>
-        <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+        <div className="mt-2 sm:mt-4 flex items-center justify-between border-t border-border pt-2 sm:pt-4">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             View details
           </span>

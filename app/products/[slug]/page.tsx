@@ -237,12 +237,12 @@ const ProductDetailPage = () => {
             </Button>
           </div>
 
-          <div className="mt-8 rounded-2xl border border-primary/15 bg-primary-soft p-5">
+          {/* <div className="mt-8 rounded-2xl border border-primary/15 bg-primary-soft p-5">
             <p className="text-sm text-primary/90">
               <span className="font-semibold">Lead time:</span> 2–4 weeks ·
               Worldwide shipping · 24-month warranty included
             </p>
-          </div>
+          </div> */}
         </div>
       </section>
 

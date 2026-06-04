@@ -369,7 +369,7 @@ export default function ProductsPage() {
                     </Button>
                   </div>
                 ) : (
-                  <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  <div className="grid gap-5 grid-cols-2 xl:grid-cols-3">
                     {visible.map((p) => {
                       // Convert images and highlights from JSON arrays to strings
                       const images = Array.isArray(p.images)

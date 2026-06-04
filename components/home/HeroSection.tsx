@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full h-[80vh] flex items-center overflow-hidden py-6">
+    <section className="relative w-full h-[85vh] flex items-center overflow-hidden py-6">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -21,13 +21,13 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-screen-2xl mx-auto px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="text-white animate-fade-up">
-          <span className="inline-block px-4 py-1 rounded-full bg-secondary-active hover:bg-secondary-hover text-white text-sm font-semibold tracking-wider uppercase mb-6">
+          <span className="inline-block px-4 py-1 rounded-full bg-secondary-active hover:bg-secondary-hover text-white text-sm font-semibold tracking-wider uppercase mb-1 sm:mb-6">
             Since 2018
           </span>
-          <h1 className="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight  mb-8">
+          <h1 className="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight mb-3 sm:mb-8">
             Your Care Our<span className="text-secondary"> Dream</span>
           </h1>
-          <p className="text-xl text-white leading-relaxed mb-10 max-w-xl">
+          <p className="text-xl text-white leading-relaxed mb-6 sm:mb-10 max-w-xl">
             Supplying hospitals, clinics, and healthcare facilities with
             cutting-edge medical technology from globally trusted brands since
             2018.

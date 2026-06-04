@@ -2,9 +2,10 @@
 
 import type { Product } from "@/data/product";
 import { DBProduct, fetchProducts } from "@/lib/queries";
+import Autoplay from "embla-carousel-autoplay";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ProductCard } from "../product/ProductCard";
 import { Button } from "../ui/button";
 import {
@@ -35,6 +36,13 @@ export default function FeatureProduct() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const plugin = useRef(
+    Autoplay({
+      delay: 4000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    }),
+  );
   useEffect(() => {
     let mounted = true;
     setLoading(true);
@@ -75,7 +83,11 @@ export default function FeatureProduct() {
           {loading ? (
             <div className="text-sm text-muted-foreground">Loading...</div>
           ) : (
-            <Carousel className="w-full" opts={{ align: "start", loop: false }}>
+            <Carousel
+              className="w-full"
+              opts={{ align: "start", loop: true }}
+              plugins={[plugin.current]}
+            >
               <CarouselContent className="-ml-4">
                 {products.map((p) => (
                   <CarouselItem
