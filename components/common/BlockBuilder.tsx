@@ -35,6 +35,7 @@ import {
   Table as TableIcon,
   Trash2,
 } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 type AnyBlock = ProductBlock & { _id: string };
@@ -411,66 +412,143 @@ const BlockEditor = ({
     return (
       <div className="space-y-3">
         {block.items.map((it, i) => (
-          <div
-            key={i}
-            className="grid sm:grid-cols-[80px_1fr_2fr_auto] gap-2 items-start rounded-lg border border-border p-3"
-          >
-            <Input
-              placeholder="Label"
-              value={it.label}
-              onChange={(e) => {
-                const next = [...block.items];
-                next[i] = { ...it, label: e.target.value };
-                onChange({ ...block, items: next });
-              }}
-            />
-            <Input
-              placeholder="Image URL"
-              value={
-                typeof it.image === "string" ? it.image : (it.image?.src ?? "")
-              }
-              onChange={(e) => {
-                const next = [...block.items];
-                next[i] = { ...it, image: e.target.value };
-                onChange({ ...block, items: next });
-              }}
-            />
-            <Input
-              placeholder="Caption"
-              value={it.caption || ""}
-              onChange={(e) => {
-                const next = [...block.items];
-                next[i] = { ...it, caption: e.target.value };
-                onChange({ ...block, items: next });
-              }}
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              onClick={() =>
-                onChange({
-                  ...block,
-                  items: block.items.filter((_, j) => j !== i),
-                })
-              }
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
+          <div key={i} className="rounded-xl border bg-card p-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-medium">Gallery Item #{i + 1}</h4>
+
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                onClick={() =>
+                  onChange({
+                    ...block,
+                    items: block.items.filter((_, j) => j !== i),
+                  })
+                }
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete
+              </Button>
+            </div>
+
+            <div className="grid lg:grid-cols-[220px_1fr] gap-6">
+              {/* Preview */}
+              <div>
+                <div className="border rounded-lg overflow-hidden aspect-square bg-muted flex items-center justify-center">
+                  {it.image ? (
+                    <Image
+                      src={String(it.image)}
+                      alt={it.caption || ""}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-sm text-muted-foreground">
+                      No Image
+                    </span>
+                  )}
+                </div>
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="mt-3 w-full text-sm"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+
+                    reader.onload = (ev) => {
+                      const next = [...block.items];
+
+                      next[i] = {
+                        ...it,
+                        image: ev.target?.result as string,
+                      };
+
+                      onChange({
+                        ...block,
+                        items: next,
+                      });
+                    };
+
+                    reader.readAsDataURL(file);
+                  }}
+                />
+              </div>
+
+              {/* Fields */}
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Label</label>
+
+                  <Input
+                    placeholder="A"
+                    value={it.label}
+                    onChange={(e) => {
+                      const next = [...block.items];
+
+                      next[i] = {
+                        ...it,
+                        label: e.target.value,
+                      };
+
+                      onChange({
+                        ...block,
+                        items: next,
+                      });
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Caption</label>
+
+                  <Input
+                    placeholder="15.6 inch touchscreen"
+                    value={it.caption || ""}
+                    onChange={(e) => {
+                      const next = [...block.items];
+
+                      next[i] = {
+                        ...it,
+                        caption: e.target.value,
+                      };
+
+                      onChange({
+                        ...block,
+                        items: next,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         ))}
+
         <Button
           type="button"
           variant="outline"
-          size="sm"
           onClick={() =>
             onChange({
               ...block,
-              items: [...block.items, { label: "", caption: "", image: "" }],
+              items: [
+                ...block.items,
+                {
+                  label: "",
+                  caption: "",
+                  image: "",
+                },
+              ],
             })
           }
         >
-          <Plus className="h-4 w-4" /> Add gallery item
+          <Plus className="h-4 w-4 mr-2" />
+          Add Gallery Item
         </Button>
       </div>
     );

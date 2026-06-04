@@ -4,8 +4,10 @@ import { CTABanner } from "@/components/common/CtaBanner";
 import { BlockRenderer } from "@/components/product/BlockRender";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
-import { categories } from "@/config/site";
-import { products } from "@/data/product";
+import type { Product } from "@/data/product";
+import type { DBProduct } from "@/lib/queries";
+import { fetchProductBySlug, fetchProducts } from "@/lib/queries";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArrowRight,
   CheckCircle2,
@@ -15,21 +17,89 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
-import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const ProductDetailPage = () => {
   const { slug = "" } = useParams();
-  const product = products.find((p) => p.slug === slug);
+  const router = useRouter();
+  // const product = products.find((p) => p.slug === slug);
 
+  const { data: product, isLoading } = useQuery({
+    queryKey: ["product", slug],
+    queryFn: () => fetchProductBySlug(slug as string),
+    enabled: !!slug,
+  });
+  const { data: allProducts = [] } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
   const [active, setActive] = useState(0);
 
-  if (!product) notFound();
+  useEffect(() => {
+    // Redirect to /products only after loading finishes and no product was found
+    if (!isLoading && !product) {
+      router.replace("/products");
+    }
+  }, [product, isLoading, router]);
 
-  const cat = categories.find((c) => c.key === product.category);
-  const related = products
-    .filter((p) => p.category === product.category && p.slug !== product.slug)
+  if (isLoading) {
+    return (
+      <div className="container-tight py-20 text-center text-muted-foreground">
+        Loading…
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="container-tight py-20 text-center">
+        <p className="font-display text-lg font-semibold text-red-700">
+          Product not found.
+        </p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          You will be redirected to the catalogue.
+        </p>
+      </div>
+    );
+  }
+
+  const cat = product.category;
+  const images = product.images.length
+    ? product.images
+    : product.hero_image
+      ? [product.hero_image]
+      : [];
+  const related = allProducts
+    .filter(
+      (p) =>
+        p.category?.slug === product.category?.slug && p.slug !== product.slug,
+    )
     .slice(0, 4);
+
+  const mapDBToProduct = (db: DBProduct): Product => ({
+    slug: db.slug,
+    name: db.name,
+    model: db.model ?? "",
+    brand: db.brand?.name ?? "Unknown",
+    category: (db.category?.slug ?? "diagnostic") as Product["category"],
+    shortDescription: db.short_description ?? "",
+    highlights: db.highlights ?? [],
+    images:
+      db.images && db.images.length
+        ? db.images
+        : db.hero_image
+          ? [db.hero_image]
+          : [],
+    brochureUrl: db.brochure_url ?? undefined,
+    featured: db.featured,
+    blocks: db.blocks ?? [],
+  });
+
+  // const cat = categories.find((c) => c.key === product.category);
+  // const related = products
+  //   .filter((p) => p.category === product.category && p.slug !== product.slug)
+  //   .slice(0, 4);
 
   const handleShare = async () => {
     const url = window.location.href;
@@ -61,7 +131,7 @@ const ProductDetailPage = () => {
           {cat && (
             <>
               <Link
-                href={`/products?cat=${cat.key}`}
+                href={`/products?cat=${cat.slug}`}
                 className="hover:text-primary"
               >
                 {cat.name}
@@ -78,17 +148,30 @@ const ProductDetailPage = () => {
         {/* Gallery */}
         <div>
           <div className="overflow-hidden rounded-2xl border border-border bg-gradient-soft shadow-card-soft">
-            <Image
+            {/* <Image
               src={product.images[active]}
               alt={product.name}
               width={1280}
               height={1024}
               className="aspect-[5/4] w-full object-contain p-8"
-            />
+            /> */}
+            {images[active] ? (
+              <Image
+                src={images[active]}
+                alt={product.name}
+                width={1280}
+                height={1024}
+                className="aspect-[5/4] w-full object-contain p-8"
+              />
+            ) : (
+              <div className="aspect-[5/4] grid place-items-center text-muted-foreground">
+                No image
+              </div>
+            )}
           </div>
-          {product.images.length > 1 && (
+          {images.length > 1 && (
             <div className="mt-4 flex flex-wrap gap-3">
-              {product.images.map((src, i) => (
+              {images.map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}
@@ -102,6 +185,8 @@ const ProductDetailPage = () => {
                   <Image
                     src={src}
                     alt=""
+                    width={500}
+                    height={500}
                     loading="lazy"
                     className="h-20 w-20 object-contain bg-gradient-soft p-1.5"
                   />
@@ -118,11 +203,11 @@ const ProductDetailPage = () => {
             {product.name}
           </h1>
           <p className="mt-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-            Brand <span className="text-primary">{product.brand}</span> · Model{" "}
-            {product.model}
+            Brand <span className="text-primary">{product.brand?.name}</span> ·
+            Model {product.model}
           </p>
           <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-            {product.shortDescription}
+            {product.short_description}
           </p>
 
           <ul className="mt-6 space-y-2.5">
@@ -140,9 +225,9 @@ const ProductDetailPage = () => {
                 Request a Quote <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
-            {product.brochureUrl && (
+            {product.brochure_url && (
               <Button asChild variant="outline" size="lg">
-                <a href={product.brochureUrl} download>
+                <a href={product.brochure_url} download>
                   <Download className="h-4 w-4" /> Download brochure
                 </a>
               </Button>
@@ -176,8 +261,8 @@ const ProductDetailPage = () => {
           <h2 className="section-title">Related products</h2>
           <p className="section-sub">More from {cat?.name}.</p>
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {related.map((p: any) => (
-              <ProductCard key={p.slug} product={p} />
+            {related.map((p) => (
+              <ProductCard key={p.slug} product={mapDBToProduct(p)} />
             ))}
           </div>
         </section>

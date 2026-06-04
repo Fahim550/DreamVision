@@ -15,6 +15,26 @@ const SectionHeading = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const BlockRenderer = ({ block }: { block: ProductBlock }) => {
+  const getSrc = (img: any): string | null => {
+    if (!img) return null;
+
+    if (typeof img === "string") {
+      const cleaned = img.trim();
+
+      if (!cleaned) return null;
+      if (cleaned.startsWith("http")) return cleaned;
+      if (cleaned.startsWith("/")) return cleaned;
+
+      return null;
+    }
+    if (typeof img === "object") {
+      if (img?.src) return img.src;
+      if (img?.default?.src) return img.default.src;
+    }
+
+    return null;
+  };
+
   switch (block.type) {
     case "rich-text":
       return (
@@ -112,34 +132,38 @@ export const BlockRenderer = ({ block }: { block: ProductBlock }) => {
             <p className="mt-2 text-muted-foreground">{block.description}</p>
           )}
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {block.items.map((it, i) => (
-              <figure
-                key={i}
-                className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card-soft"
-              >
-                <div className="relative aspect-square overflow-hidden bg-gradient-soft">
-                  <Image
-                    src={it.image}
-                    alt={it.caption || it.label}
-                    width={500}
-                    height={500}
-                    loading="lazy"
-                    className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute left-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-glow">
-                    {it.label}
-                  </span>
-                </div>
-                {it.caption && (
-                  <figcaption className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
-                    <span className="font-semibold text-foreground">
-                      {it.label}.
-                    </span>{" "}
-                    {it.caption}
-                  </figcaption>
-                )}
-              </figure>
-            ))}
+            {block.items.map((it, i) => {
+              const src = getSrc(it.image);
+              if (!src) return null;
+              return (
+                <figure
+                  key={i}
+                  className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card-soft"
+                >
+                  <div className="relative aspect-square overflow-hidden bg-gradient-soft">
+                    <Image
+                      src={src}
+                      alt={it.caption || it.label}
+                      width={500}
+                      height={500}
+                      loading="lazy"
+                      className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span className="absolute left-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-glow">
+                      {it.label}
+                    </span>
+                  </div>
+                  {it.caption && (
+                    <figcaption className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
+                      <span className="font-semibold text-foreground">
+                        {it.label}.
+                      </span>{" "}
+                      {it.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              );
+            })}
           </div>
         </section>
       );

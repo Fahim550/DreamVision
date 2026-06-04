@@ -1,3 +1,4 @@
+import { QueryProvider } from "@/components/common/QueryClientProvider";
 import { AuthProvider } from "@/components/hooks/useAuth";
 import LayoutShell from "@/components/layout/LayoutShell";
 import type { Metadata } from "next";
@@ -42,7 +43,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <LayoutShell>{children}</LayoutShell>
+          <QueryProvider>
+            <LayoutShell>{children}</LayoutShell>
+          </QueryProvider>
           <Toaster position="top-right" richColors />
         </AuthProvider>
       </body>

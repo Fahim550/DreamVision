@@ -3,15 +3,35 @@
 import { ProductCard } from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { categories } from "@/config/site";
-import { products } from "@/data/product";
+import { categories, type CategoryKey } from "@/config/site";
+import type { ProductBlock } from "@/data/product";
 import { cn } from "@/lib/utils";
+import type { Json } from "@/types/types";
+import { createClient } from "@/utils/supabase/client";
 import { Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const PAGE_SIZE = 6;
+
+interface DatabaseProduct {
+  id: string;
+  name: string;
+  model: string | null;
+  slug: string;
+  short_description: string | null;
+  images: Json;
+  highlights: Json;
+  brand_id: string | null;
+  category_id: string | null;
+  featured: boolean;
+  brochure_url: string | null;
+  blocks: Json;
+  // We'll add these as we fetch the related data
+  brand?: string | null;
+  category?: string | null;
+}
 
 export default function ProductsPage() {
   const params = useSearchParams();
@@ -21,28 +41,103 @@ export default function ProductsPage() {
   const [brand, setBrand] = useState<string>("all");
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
+  const [products, setProducts] = useState<DatabaseProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const allBrands = useMemo(
-    () => Array.from(new Set(products.map((p) => p.brand))).sort(),
-    [],
-  );
+  // Fetch products from Supabase
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const supabase = createClient();
+
+        // Fetch products with brand names
+        const { data, error: fetchError } = await supabase
+          .from("products")
+          .select(
+            `
+            id,
+            name,
+            model,
+            slug,
+            short_description,
+            images,
+            highlights,
+            featured,
+            brochure_url,
+            blocks,
+            category_id,
+            brands (name)
+          `,
+          )
+          .eq("published", true);
+
+        if (fetchError) {
+          throw fetchError;
+        }
+
+        // TypeScript doesn't know about the database schema, so we cast and map
+        const typedData = (data as Array<Record<string, unknown>>) || [];
+        const mappedProducts: DatabaseProduct[] = typedData.map((item) => ({
+          id: (item.id as string) || "",
+          name: (item.name as string) || "",
+          model: (item.model as string | null) || null,
+          slug: (item.slug as string) || "",
+          short_description: (item.short_description as string | null) || null,
+          images: (item.images as Json) || [],
+          highlights: (item.highlights as Json) || [],
+          brand_id: (item.brand_id as string | null) || null,
+          category_id: (item.category_id as string | null) || null,
+          featured: (item.featured as boolean) || false,
+          brochure_url: (item.brochure_url as string | null) || null,
+          blocks: (item.blocks as Json) || [],
+          // Extract brand name from the joined brands table
+          brand: item.brands
+            ? ((item.brands as Record<string, unknown>).name as string) || null
+            : null,
+          // For now, we'll keep category_id and map it to category key later
+          category: null,
+        }));
+
+        setProducts(mappedProducts);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setError("Failed to load products. Please try again later.");
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const allBrands = useMemo(() => {
+    const brandSet = new Set<string>();
+    products.forEach((p) => {
+      if (p.brand) brandSet.add(p.brand);
+    });
+    return Array.from(brandSet).sort();
+  }, [products]);
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
-      if (cat !== "all" && p.category !== cat) return false;
+      if (cat !== "all" && p.category_id !== cat) return false;
       if (brand !== "all" && p.brand !== brand) return false;
       if (q) {
         const t = q.toLowerCase();
         if (
           !p.name.toLowerCase().includes(t) &&
-          !p.model.toLowerCase().includes(t) &&
-          !p.shortDescription.toLowerCase().includes(t)
+          !p.model?.toLowerCase().includes(t) &&
+          !p.short_description?.toLowerCase().includes(t)
         )
           return false;
       }
       return true;
     });
-  }, [cat, brand, q]);
+  }, [cat, brand, q, products]);
 
   // useEffect(() => setPage(1), [cat, brand, q]);
 
@@ -66,8 +161,16 @@ export default function ProductsPage() {
             Medical equipment catalogue
           </h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            Browse {products.length}+ devices across {categories.length}{" "}
-            departments. Filter, request quotes, or talk to an engineer.
+            {loading ? (
+              "Loading products..."
+            ) : error ? (
+              <span className="text-red-600">{error}</span>
+            ) : (
+              <>
+                Browse {products.length}+ devices across {categories.length}{" "}
+                departments. Filter, request quotes, or talk to an engineer.
+              </>
+            )}
           </p>
         </div>
       </section>
@@ -183,77 +286,134 @@ export default function ProductsPage() {
 
           {/* Grid */}
           <div>
-            <div className="mb-5 flex items-center justify-between text-sm">
-              <p className="text-muted-foreground">
-                Showing{" "}
-                <span className="font-semibold text-foreground">
-                  {visible.length}
-                </span>{" "}
-                of {filtered.length} products
-              </p>
-            </div>
-
-            {visible.length === 0 ? (
+            {loading ? (
               <div className="rounded-2xl border border-dashed border-border bg-card py-20 text-center">
                 <p className="font-display text-lg font-semibold">
-                  No products match your filters
+                  Loading products...
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Try clearing your search or selecting a different category.
+                  Please wait while we fetch your products.
                 </p>
+              </div>
+            ) : error ? (
+              <div className="rounded-2xl border border-dashed border-red-300 bg-red-50 py-20 text-center">
+                <p className="font-display text-lg font-semibold text-red-700">
+                  Unable to load products
+                </p>
+                <p className="mt-1 text-sm text-red-600">{error}</p>
                 <Button
-                  onClick={() => {
-                    setQ("");
-                    setBrand("all");
-                    setCategory("all");
-                  }}
+                  onClick={() => window.location.reload()}
                   variant="cta"
                   className="mt-5"
                 >
-                  Reset filters
+                  Try again
                 </Button>
               </div>
             ) : (
-              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {visible.map((p) => (
-                  <ProductCard key={p.slug} product={p} />
-                ))}
-              </div>
-            )}
+              <>
+                <div className="mb-5 flex items-center justify-between text-sm">
+                  <p className="text-muted-foreground">
+                    Showing{" "}
+                    <span className="font-semibold text-foreground">
+                      {visible.length}
+                    </span>{" "}
+                    of {filtered.length} products
+                  </p>
+                </div>
 
-            {totalPages > 1 && (
-              <div className="mt-10 flex items-center justify-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page === 1}
-                  onClick={() => setPage((p) => p - 1)}
-                >
-                  Previous
-                </Button>
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setPage(i + 1)}
-                    className={cn(
-                      "h-9 w-9 rounded-md text-sm font-semibold transition-colors",
-                      page === i + 1
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                    )}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page === totalPages}
-                  onClick={() => setPage((p) => p + 1)}
-                >
-                  Next
-                </Button>
-              </div>
+                {visible.length === 0 ? (
+                  <div className="rounded-2xl border border-dashed border-border bg-card py-20 text-center">
+                    <p className="font-display text-lg font-semibold">
+                      No products match your filters
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Try clearing your search or selecting a different
+                      category.
+                    </p>
+                    <Button
+                      onClick={() => {
+                        setQ("");
+                        setBrand("all");
+                        setCategory("all");
+                      }}
+                      variant="cta"
+                      className="mt-5"
+                    >
+                      Reset filters
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                    {visible.map((p) => {
+                      // Convert images and highlights from JSON arrays to strings
+                      const images = Array.isArray(p.images)
+                        ? (p.images as string[])
+                        : [];
+                      const highlights = Array.isArray(p.highlights)
+                        ? (p.highlights as string[])
+                        : [];
+                      const blocks = Array.isArray(p.blocks)
+                        ? (p.blocks as ProductBlock[])
+                        : [];
+
+                      return (
+                        <ProductCard
+                          key={p.slug}
+                          product={{
+                            slug: p.slug,
+                            name: p.name,
+                            model: p.model || "",
+                            brand: p.brand || "Unknown",
+                            category: (p.category_id ||
+                              "diagnostic") as CategoryKey,
+                            shortDescription: p.short_description || "",
+                            highlights,
+                            images,
+                            brochureUrl: p.brochure_url || undefined,
+                            featured: p.featured,
+                            blocks: blocks,
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+
+                {totalPages > 1 && (
+                  <div className="mt-10 flex items-center justify-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={page === 1}
+                      onClick={() => setPage((p) => p - 1)}
+                    >
+                      Previous
+                    </Button>
+                    {Array.from({ length: totalPages }).map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setPage(i + 1)}
+                        className={cn(
+                          "h-9 w-9 rounded-md text-sm font-semibold transition-colors",
+                          page === i + 1
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                        )}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={page === totalPages}
+                      onClick={() => setPage((p) => p + 1)}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
