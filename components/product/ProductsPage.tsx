@@ -3,7 +3,7 @@
 import { ProductCard } from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { categories, type CategoryKey } from "@/config/site";
+import { type CategoryKey } from "@/config/site";
 import type { ProductBlock } from "@/data/product";
 import { cn } from "@/lib/utils";
 import type { Json } from "@/types/types";
@@ -31,6 +31,7 @@ interface DatabaseProduct {
   // We'll add these as we fetch the related data
   brand?: string | null;
   category?: string | null;
+  categorySlug?: string | null;
 }
 
 export default function ProductsPage() {
@@ -42,18 +43,39 @@ export default function ProductsPage() {
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState<DatabaseProduct[]>([]);
+  const [categories, setCategories] = useState<
+    Array<{ key: string; name: string }>
+  >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch products from Supabase
+  // Fetch categories and products from Supabase
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
         const supabase = createClient();
 
-        // Fetch products with brand names
-        const { data, error: fetchError } = await supabase
+        // Fetch categories
+        const { data: catData, error: catError } = await supabase
+          .from("categories")
+          .select("slug, name")
+          .order("sort_order", { ascending: true });
+
+        if (catError) {
+          throw catError;
+        }
+
+        const fetchedCategories =
+          (catData as Array<Record<string, unknown>>) || [];
+        const mappedCategories = fetchedCategories.map((cat) => ({
+          key: (cat.slug as string) || "",
+          name: (cat.name as string) || "",
+        }));
+        setCategories(mappedCategories);
+
+        // Fetch products with brand and category names
+        const { data: prodData, error: prodError } = await supabase
           .from("products")
           .select(
             `
@@ -68,17 +90,18 @@ export default function ProductsPage() {
             brochure_url,
             blocks,
             category_id,
-            brands (name)
+            brands (name),
+            categories (slug)
           `,
           )
           .eq("published", true);
 
-        if (fetchError) {
-          throw fetchError;
+        if (prodError) {
+          throw prodError;
         }
 
         // TypeScript doesn't know about the database schema, so we cast and map
-        const typedData = (data as Array<Record<string, unknown>>) || [];
+        const typedData = (prodData as Array<Record<string, unknown>>) || [];
         const mappedProducts: DatabaseProduct[] = typedData.map((item) => ({
           id: (item.id as string) || "",
           name: (item.name as string) || "",
@@ -92,26 +115,29 @@ export default function ProductsPage() {
           featured: (item.featured as boolean) || false,
           brochure_url: (item.brochure_url as string | null) || null,
           blocks: (item.blocks as Json) || [],
-          // Extract brand name from the joined brands table
           brand: item.brands
             ? ((item.brands as Record<string, unknown>).name as string) || null
             : null,
-          // For now, we'll keep category_id and map it to category key later
+          categorySlug: item.categories
+            ? ((item.categories as Record<string, unknown>).slug as string) ||
+              null
+            : null,
           category: null,
         }));
 
         setProducts(mappedProducts);
         setError(null);
       } catch (err) {
-        console.error("Error fetching products:", err);
+        console.error("Error fetching data:", err);
         setError("Failed to load products. Please try again later.");
         setProducts([]);
+        setCategories([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchData();
   }, []);
 
   const allBrands = useMemo(() => {
@@ -124,7 +150,7 @@ export default function ProductsPage() {
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
-      if (cat !== "all" && p.category_id !== cat) return false;
+      if (cat !== "all" && p.categorySlug !== cat) return false;
       if (brand !== "all" && p.brand !== brand) return false;
       if (q) {
         const t = q.toLowerCase();
@@ -168,7 +194,7 @@ export default function ProductsPage() {
             ) : (
               <>
                 Browse {products.length}+ devices across {categories.length}{" "}
-                departments. Filter, request quotes, or talk to an engineer.
+                categories. Filter, request quotes, or talk to an engineer.
               </>
             )}
           </p>
@@ -364,7 +390,7 @@ export default function ProductsPage() {
                             name: p.name,
                             model: p.model || "",
                             brand: p.brand || "Unknown",
-                            category: (p.category_id ||
+                            category: (p.categorySlug ||
                               "diagnostic") as CategoryKey,
                             shortDescription: p.short_description || "",
                             highlights,
