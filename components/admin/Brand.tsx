@@ -180,19 +180,19 @@ const AdminBrands = () => {
             <DialogTitle>{editing ? "Edit brand" : "New brand"}</DialogTitle>
           </DialogHeader>
           <form onSubmit={onSubmit} className="space-y-3">
-            <div>
+            <div className="space-y-2">
               <Label>Name</Label>
               <Input name="name" required defaultValue={editing?.name} />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label>Slug (auto if empty)</Label>
               <Input name="slug" defaultValue={editing?.slug} />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label>Logo URL</Label>
               <Input name="logo_url" defaultValue={editing?.logo_url || ""} />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label>Website</Label>
               <Input name="website" defaultValue={editing?.website || ""} />
             </div>

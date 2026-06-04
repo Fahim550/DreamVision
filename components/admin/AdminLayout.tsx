@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Logo from "@/public/image/logo.png";
+
 import {
   Award,
   ExternalLink,
@@ -9,11 +10,14 @@ import {
   Inbox,
   LayoutDashboard,
   LogOut,
+  Menu,
   Package,
   Tags,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const items = [
@@ -29,6 +33,7 @@ import Image from "next/image";
 import { type ReactNode } from "react";
 
 export const AdminLayout = ({ children }: { children: ReactNode }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -40,7 +45,22 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="min-h-screen flex bg-surface">
-      <aside className="hidden md:flex w-60 shrink-0 flex-col border-r border-border bg-card">
+      {/* Mobile overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      <aside
+        className={cn(
+          "fixed md:relative w-60 shrink-0 flex flex-col border-r border-border bg-card z-40 h-screen md:h-auto transition-transform duration-300 md:transition-none overflow-y-auto",
+          mobileMenuOpen
+            ? "translate-x-0"
+            : "-translate-x-full md:translate-x-0",
+        )}
+      >
         <div className="h-16 px-5 flex items-center border-b border-border">
           <Link
             href="/admin"
@@ -64,6 +84,7 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
               <Link
                 key={href}
                 href={href}
+                onClick={() => setMobileMenuOpen(false)}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   isActive
@@ -102,12 +123,30 @@ export const AdminLayout = ({ children }: { children: ReactNode }) => {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="md:hidden sticky top-0 z-30 h-14 border-b border-border bg-card px-4 flex items-center justify-between">
-          <Link href="/admin" className="font-display font-bold">
-            Dream Vision Admin
-          </Link>
-          <Button variant="ghost" size="sm" onClick={handleSignOut}>
+        <header className="md:hidden sticky top-0 z-40 h-14 border-b border-border bg-card px-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Image
+              src={Logo}
+              alt="Logo"
+              className="h-10 w-10 shadow-md rounded-md object-contain "
+            />
+            <Link href="/admin" className="font-display font-bold">
+              Dream Vision Admin
+            </Link>
+          </div>
+          {/* <Button variant="ghost" size="sm" onClick={handleSignOut}>
             <LogOut className="h-4 w-4" />
+          </Button> */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </Button>
         </header>
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1400px] w-full">

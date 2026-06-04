@@ -138,7 +138,7 @@ const AdminCategories = () => {
                   <td className="p-3 font-medium">{c.name}</td>
                   <td className="p-3 text-muted-foreground">{c.slug}</td>
                   <td className="p-3">{c.sort_order}</td>
-                  <td className="p-3 flex gap-1">
+                  <td className="p-2 sm:p-3 flex gap-0 sm:gap-1">
                     <Button
                       size="sm"
                       variant="ghost"
@@ -174,22 +174,22 @@ const AdminCategories = () => {
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={onSubmit} className="space-y-3">
-            <div>
+            <div className="space-y-2">
               <Label>Name</Label>
               <Input name="name" required defaultValue={editing?.name} />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label>Slug (auto if empty)</Label>
               <Input name="slug" defaultValue={editing?.slug} />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label>Description</Label>
               <Input
                 name="description"
                 defaultValue={editing?.description || ""}
               />
             </div>
-            <div>
+            <div className="space-y-2">
               <Label>Sort order</Label>
               <Input
                 name="sort_order"
