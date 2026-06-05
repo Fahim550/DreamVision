@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Logo from "@/public/image/logo.png";
+import React from "react";
 
 import {
   Award,
@@ -34,14 +35,38 @@ import { type ReactNode } from "react";
 
 export const AdminLayout = ({ children }: { children: ReactNode }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, loading, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
+  // Redirect if not authenticated or not admin
+  React.useEffect(() => {
+    if (!loading && (!user || !isAdmin)) {
+      router.push("/login");
+    }
+  }, [user, isAdmin, loading, router]);
+
   const handleSignOut = async () => {
     await signOut();
-    router.push("/admin/login");
+    router.push("/login");
   };
+
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-surface">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-4 border-muted-foreground border-t-primary rounded-full animate-spin"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Prevent rendering admin content if not authenticated or not admin
+  if (!user || !isAdmin) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex bg-surface">

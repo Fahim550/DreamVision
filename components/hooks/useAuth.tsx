@@ -30,15 +30,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-  // const [supabase, setSupabase] = useState<ReturnType<
-  //   typeof createSupabaseClient
-  // > | null>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    // if (typeof window === "undefined") return;
 
-    // const client = createSupabaseClient();
-    // setSupabase(client);
     const supabase = createClient();
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
